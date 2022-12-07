@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import text from "./data";
 
 function App() {
+  const [paraCount, setParaCount] = useState(0);
+  const [paras, setParas] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setParas(() => {
+      let numberOfParas = +paraCount;
+      let a = [];
+      for (let i = 1; i <= numberOfParas; i++) {
+        a.push(text[i - 1]);
+      }
+      return a;
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="section-center">
+      <h3>TIRED OF BORING LOREM IPSUM?</h3>
+      <form className="lorem-form" onSubmit={handleSubmit}>
+        <label htmlFor="amount">Paragraphs:</label>
+        <input
+          type="number"
+          name="amount"
+          id="amount"
+          value={paraCount}
+          onChange={(e) => setParaCount(e.target.value)}
+        />
+        <button type="submit" className="btn">
+          Generate
+        </button>
+      </form>
+      <article className="lorem-text">
+        {paras.map((para, index) => (
+          <p key={index}>{para}</p>
+        ))}
+      </article>
+    </section>
   );
 }
 
