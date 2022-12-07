@@ -7,14 +7,26 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setParas(() => {
-      let numberOfParas = +paraCount;
-      let a = [];
-      for (let i = 1; i <= numberOfParas; i++) {
-        a.push(text[i - 1]);
-      }
-      return a;
-    });
+    let numberOfParas = +paraCount;
+
+    if (numberOfParas <= 0) {
+      numberOfParas = 0;
+    }
+
+    if (numberOfParas > text.length) {
+      numberOfParas = text.length;
+    }
+
+    setParas(text.slice(0, numberOfParas));
+
+    // setParas(() => {
+    //   let numberOfParas = +paraCount;
+    //   let a = [];
+    //   for (let i = 1; i <= numberOfParas; i++) {
+    //     a.push(text[i - 1]);
+    //   }
+    //   return a;
+    // });
   };
 
   return (
